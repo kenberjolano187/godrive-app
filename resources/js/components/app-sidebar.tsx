@@ -1,0 +1,66 @@
+import { NavFooter } from '@/components/nav-footer';
+import { NavMain } from '@/components/nav-main';
+import { NavUser } from '@/components/nav-user';
+import {
+    Sidebar,
+    SidebarContent,
+    SidebarFooter,
+    SidebarHeader,
+    SidebarMenu,
+    SidebarMenuButton,
+    SidebarMenuItem,
+} from '@/components/ui/sidebar';
+import { type NavItem } from '@/types';
+import { Link, usePage } from '@inertiajs/react';
+import { Home, User } from 'lucide-react';
+import AppLogo from './app-logo';
+
+export function AppSidebar() {
+    const { auth } = usePage().props as any;
+    const userType = auth?.user?.user_type;
+
+    const dashboardRoute = userType === 'customer' ? '/customer/dashboard' : '/dashboard';
+
+    const mainNavItems: NavItem[] = [
+        {
+            title: 'Dashboard',
+            href: dashboardRoute,
+            icon: Home,
+        },
+    ];
+
+    if (userType === 'admin') {
+        mainNavItems.push({
+            title: 'User Management',
+            href: '/user',
+            icon: User,
+        });
+    }
+
+    const footerNavItems: NavItem[] = [];
+
+    return (
+        <Sidebar collapsible="icon" variant="inset">
+            <SidebarHeader>
+                <SidebarMenu>
+                    <SidebarMenuItem>
+                        <SidebarMenuButton size="lg" asChild>
+                            <Link href={dashboardRoute} prefetch>
+                                <AppLogo />
+                            </Link>
+                        </SidebarMenuButton>
+                    </SidebarMenuItem>
+                </SidebarMenu>
+            </SidebarHeader>
+
+            <SidebarContent>
+                <NavMain items={mainNavItems} />
+            </SidebarContent>
+
+            <SidebarFooter>
+                <NavFooter items={footerNavItems} className="mt-auto" />
+                <NavUser />
+            </SidebarFooter>
+        </Sidebar>
+    );
+}
