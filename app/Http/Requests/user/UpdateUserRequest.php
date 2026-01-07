@@ -20,7 +20,7 @@ class UpdateUserRequest extends FormRequest
             'lastname' => 'required|string|max:250',
             'email' => "required|string|email|max:255|unique:users,email,{$userId}",
             'password' => 'nullable|string|min:8|confirmed',
-            'gender' => 'required|in:male,female,other',
+            'gender' => 'required|in:male,female',
             'birthdate' => 'nullable|date|before:today',
             'age' => 'nullable|integer|min:1|max:120',
             'phone_number' => 'nullable|string|max:100',

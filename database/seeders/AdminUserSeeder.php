@@ -15,7 +15,6 @@ class AdminUserSeeder extends Seeder
     {
         User::create([
             'firstname' => 'Admin',
-            'middlename' => null,
             'lastname' => 'User',
             'user_type' => 'admin',
             'status' => 'active',
