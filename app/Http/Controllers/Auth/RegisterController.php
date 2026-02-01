@@ -25,14 +25,13 @@ class RegisterController extends Controller
         $request->validate([
             'email' => 'required|string|email|max:255|unique:users',
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'user_type' => 'sometimes|string|in:customer,owner'
         ]);
 
         $user = User::create([
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'status' => User::STATUS_INACTIVE,
-            'user_type' => $request->user_type ?? 'customer',
+            'user_type' => 'customer',
         ]);
 
         Auth::login($user);
