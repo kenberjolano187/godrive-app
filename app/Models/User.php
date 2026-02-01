@@ -35,11 +35,6 @@ class User extends Authenticatable implements MustVerifyEmail
 
     protected $appends = ['name'];
 
-    public function sendEmailVerificationNotification()
-    {
-        
-    }
-
     protected function name(): Attribute
     {
         return Attribute::make(
