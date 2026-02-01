@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
+use Illuminate\Support\Facades\Mail;
 
 Route::middleware('guest')->group(function () {
     Route::get('/register', [RegisterController::class, 'create'])->name('register');
@@ -32,6 +33,18 @@ Route::middleware(['auth', 'verified', 'user.type:owner,admin'])->group(function
     Route::get('/dashboard', function () {
         return Inertia::render('admin/dashboard');
     })->name('dashboard');
+});
+
+Route::get('/test-email-connection', function () {
+    try {
+        Mail::raw('Hello! Kung nabasa ni nimo, SUCCESS ang imong email settings!', function ($msg) {
+            $msg->to('kenberjolano187@gmail.com')
+                ->subject('Test Email gikan sa Railway');
+        });
+        return 'SUCCESS: Check your inbox. Okay na ang connection!';
+    } catch (\Exception $e) {
+        return 'ERROR: ' . $e->getMessage();
+    }
 });
 
 require __DIR__ . '/otp.php';
