@@ -45,7 +45,10 @@ class RegisterController extends Controller
             'token' => $token,
         ]);
 
-        $user->notify(new VerifyAccountNotification($verificationUrl));
+        try {
+            $user->notify(new VerifyAccountNotification($verificationUrl));
+        } catch (\Exception $e) {
+        }
 
         return redirect()->route('verification.notice');
     }

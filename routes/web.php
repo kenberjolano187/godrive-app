@@ -18,7 +18,7 @@ Route::get('/email/verify', function () {
 
 Route::get('/', function () {
     return Inertia::render('welcome', [
-        'canRegister' => Features::enabled(Features::registration()),
+        'canRegister' => true,
     ]);
 })->name('home');
 
