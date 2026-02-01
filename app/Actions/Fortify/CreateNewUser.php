@@ -20,12 +20,14 @@ class CreateNewUser implements CreatesNewUsers
         Validator::make($input, [
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique(User::class)],
             'password' => $this->passwordRules(),
+            'user_type' => ['sometimes', 'string', 'in:customer,owner'], 
         ])->validate();
 
         $user = User::create([
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
             'status' => User::STATUS_INACTIVE,
+            'user_type' => $input['user_type'] ?? 'customer', 
         ]);
 
         $token = Str::random(64);
